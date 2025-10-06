@@ -67,7 +67,7 @@
      * Get current state from admin bar
      */
     function getCurrentStateFromAdminBar() {
-        const $adminBarItem = $('#wp-admin-bar-devmode-toggle .ab-item span');
+        const $adminBarItem = $('#wp-admin-bar-devmode-toggle');
         
         if ($adminBarItem.hasClass('devmode-admin-bar-active')) {
             return 'active';
@@ -76,7 +76,7 @@
         }
         
         // Fallback: parse text content
-        const text = $adminBarItem.text();
+        const text = $adminBarItem.find('.ab-item span').text();
         return text.includes('Active') ? 'active' : 'protected';
     }
     
@@ -234,12 +234,16 @@
      * Update admin bar display
      */
     function updateAdminBar(state) {
-        const $adminBarItem = $('#wp-admin-bar-devmode-toggle .ab-item span');
+        const $adminBarItem = $('#wp-admin-bar-devmode-toggle');
+        const $span = $adminBarItem.find('.ab-item span');
         const isActive = state === 'active';
         
         $adminBarItem
             .removeClass('devmode-admin-bar-active devmode-admin-bar-protected')
-            .addClass(isActive ? 'devmode-admin-bar-active' : 'devmode-admin-bar-protected')
+            .addClass(isActive ? 'devmode-admin-bar-active' : 'devmode-admin-bar-protected');
+            
+        $span
+            .removeClass('devmode-admin-bar-active devmode-admin-bar-protected')
             .text(isActive ? 'Dev Mode: Active' : 'Dev Mode: Protected');
     }
     

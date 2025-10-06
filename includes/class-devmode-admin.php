@@ -281,10 +281,10 @@ class Admin {
         
         $wp_admin_bar->add_node([
             'id' => 'devmode-toggle',
-            'title' => '<span class="' . $class . '">' . $title . '</span>',
+            'title' => '<span>' . $title . '</span>',
             'href' => '#',
             'meta' => [
-                'class' => 'devmode-admin-bar-toggle',
+                'class' => 'devmode-admin-bar-toggle ' . $class,
                 'title' => __('Click to toggle Dev.Mode state', 'dev-mode')
             ]
         ]);

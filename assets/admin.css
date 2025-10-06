@@ -4,33 +4,34 @@
 
 /* Admin Bar Styles */
 #wp-admin-bar-devmode-toggle .ab-item {
-    color: #fff !important;
-    font-weight: 600;
-    padding: 4px 12px !important;
-    border-radius: 6px !important;
-    margin: 2px 4px !important;
+    background-color: #F6F7F7 !important;
+    border-radius: 2px !important;
+    display: flex !important;
+    height: 18px !important;
+    padding: 0px 6px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #3C434A !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 16px !important;
     transition: all 0.3s ease;
 }
 
-#wp-admin-bar-devmode-toggle .ab-item .devmode-admin-bar-active {
-    background-color: #22c55e !important;
-    color: #fff !important;
-    padding: 4px 8px !important;
-    border-radius: 4px !important;
-    display: inline-block;
+#wp-admin-bar-devmode-toggle.devmode-admin-bar-active .ab-item {
+    background-color: #E6F2E8 !important;
+    color: #00450C !important;
 }
 
-#wp-admin-bar-devmode-toggle .ab-item .devmode-admin-bar-protected {
-    background-color: #ef4444 !important;
-    color: #fff !important;
-    padding: 4px 8px !important;
-    border-radius: 4px !important;
-    display: inline-block;
+#wp-admin-bar-devmode-toggle.devmode-admin-bar-protected .ab-item {
+    background-color: #FFE8E8 !important;
+    color: #8B0000 !important;
 }
 
 #wp-admin-bar-devmode-toggle:hover .ab-item {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    transform: translateY(-1px);
+    opacity: 0.8;
+    transform: none;
 }
 
 /* Settings Page Styles */
@@ -200,14 +201,10 @@
     }
     
     #wp-admin-bar-devmode-toggle .ab-item {
-        padding: 3px 8px !important;
-        margin: 1px 2px !important;
-        font-size: 12px !important;
-    }
-    
-    #wp-admin-bar-devmode-toggle .ab-item .devmode-admin-bar-active,
-    #wp-admin-bar-devmode-toggle .ab-item .devmode-admin-bar-protected {
-        padding: 3px 6px !important;
+        height: 16px !important;
+        padding: 0px 4px !important;
+        font-size: 11px !important;
+        line-height: 14px !important;
     }
 }
 
