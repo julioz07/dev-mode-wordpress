@@ -6,6 +6,9 @@
 #wp-admin-bar-devmode-toggle .ab-item {
     color: #fff !important;
     font-weight: 600;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    margin: 4px 8px !important;
 }
 
 #wp-admin-bar-devmode-toggle .devmode-admin-bar-active {
@@ -20,6 +23,8 @@
 
 #wp-admin-bar-devmode-toggle:hover .ab-item {
     background-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-1px);
+    transition: all 0.3s ease;
 }
 
 /* Settings Page Styles */
@@ -28,14 +33,16 @@
 }
 
 .devmode-state-toggle button {
-    padding: 12px 24px;
+    padding: 16px 32px;
+    margin: 8px 12px;
     font-size: 16px;
     font-weight: 600;
-    border-radius: 6px;
-    border: none;
+    border-radius: 12px;
+    border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 200px;
+    min-width: 220px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .devmode-btn-active {
@@ -47,6 +54,8 @@
 .devmode-btn-active:hover {
     background-color: #16a34a !important;
     border-color: #15803d !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
 }
 
 .devmode-btn-protected {
@@ -58,6 +67,8 @@
 .devmode-btn-protected:hover {
     background-color: #dc2626 !important;
     border-color: #b91c1c !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
 }
 
 .devmode-btn-switching {
@@ -66,9 +77,11 @@
 }
 
 .devmode-state-info {
-    margin-left: 15px;
+    margin-left: 20px;
     font-style: italic;
     color: #666;
+    font-size: 14px;
+    padding: 8px 0;
 }
 
 /* Log Entries */
@@ -163,19 +176,27 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .devmode-state-toggle button {
-        min-width: 160px;
+        min-width: 180px;
         font-size: 14px;
-        padding: 10px 20px;
+        padding: 14px 24px;
+        margin: 6px 8px;
     }
     
     .devmode-state-info {
         display: block;
         margin-left: 0;
-        margin-top: 10px;
+        margin-top: 12px;
+        padding: 6px 0;
     }
     
     .devmode-log-entries {
         font-size: 11px;
+    }
+    
+    #wp-admin-bar-devmode-toggle .ab-item {
+        padding: 6px 12px !important;
+        margin: 2px 4px !important;
+        font-size: 12px !important;
     }
 }
 

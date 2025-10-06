@@ -110,7 +110,20 @@
      * Toggle Dev.Mode state via AJAX
      */
     function toggleDevModeState($button) {
-        const nonce = $button ? $button.data('nonce') : $('#devmode-toggle-btn').data('nonce');
+        // Get nonce from different sources based on context
+        let nonce;
+        if ($button && $button.data('nonce')) {
+            // From settings page button
+            nonce = $button.data('nonce');
+        } else if (devmode_ajax.nonce) {
+            // From localized script (admin bar)
+            nonce = devmode_ajax.nonce;
+        } else {
+            // Fallback: refresh page to get updated state
+            console.log('No nonce available, refreshing page');
+            window.location.reload();
+            return;
+        }
         
         // Update UI to show loading state
         updateUIForLoading($button);
@@ -130,6 +143,7 @@
                 }
             },
             error: function(xhr, status, error) {
+                console.log('AJAX Error:', xhr, status, error);
                 handleToggleError({
                     message: devmode_ajax.messages.error + ' ' + error
                 }, $button);
@@ -190,6 +204,14 @@
         
         // Show error message
         showNotice(message, 'error');
+        
+        // For admin bar, refresh page if error persists
+        if (!$button) {
+            setTimeout(function() {
+                console.log('Admin bar toggle error, refreshing page');
+                window.location.reload();
+            }, 2000);
+        }
     }
     
     /**

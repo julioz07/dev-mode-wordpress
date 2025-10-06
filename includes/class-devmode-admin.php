@@ -323,6 +323,7 @@ class Admin {
         // Localize script for AJAX
         wp_localize_script('devmode-admin', 'devmode_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('devmode_toggle'),
             'messages' => [
                 'confirm_activate' => __('Are you sure you want to activate Dev Mode? This will allow file modifications and other changes.', 'dev-mode'),
                 'confirm_protect' => __('Are you sure you want to enable Protected mode? This will block modifications and secure the site.', 'dev-mode'),
