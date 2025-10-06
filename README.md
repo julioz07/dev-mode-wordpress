@@ -7,6 +7,9 @@
 ![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-orange)
 ![Version](https://img.shields.io/badge/Version-1.0.0-green)
 
+**🌍 Language / Idioma:**  
+[![Português](https://img.shields.io/badge/🇵🇹-Português-green?style=for-the-badge)](README.md) [![English](https://img.shields.io/badge/🇺🇸-English-blue?style=for-the-badge)](README_EN.md)
+
 **Dev.Mode** é um plugin WordPress gratuito que oferece proteção inteligente alternando entre dois estados de segurança: **Ativo** para desenvolvimento e **Protegido** para produção.
 
 ## ✨ Características Principais
