@@ -3,7 +3,7 @@
  * Plugin Name: Dev.Mode
  * Plugin URI: https://github.com/julioz07/dev-mode-wordpress
  * Description: Alternates between two states: Active (allows changes) and Protected (blocks modifications to core, plugins, themes, and user creation). Free for personal and non-commercial use.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Júlio Rodrigues
  * Author URI: https://julio-cr.pt/
  * Text Domain: dev-mode
@@ -29,7 +29,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('DEVMODE_VERSION', '1.0.0');
+define('DEVMODE_VERSION', '1.1.0');
 define('DEVMODE_PLUGIN_FILE', __FILE__);
 define('DEVMODE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DEVMODE_PLUGIN_URL', plugin_dir_url(__FILE__));

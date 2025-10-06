@@ -5,12 +5,29 @@ Todas as mudanças notáveis deste projeto serão documentadas neste ficheiro.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2025-10-06
 
-### Em Desenvolvimento
-- Melhorias na interface de utilizador
-- Suporte para mais tipos de servidor
-- Funcionalidades de auditoria avançadas
+### 🐛 Corrigido
+- **Crítico**: Resolvido problema do botão da admin bar que ficava em estado "switching" infinito
+- **AJAX Toggle**: Corrigida obtenção do nonce para requisições AJAX do botão da barra superior
+- **Fallback Robusto**: Adicionado refresh automático da página quando AJAX falha na admin bar
+- **Erro de Estado**: Corrigido problema onde admin bar não conseguia alternar corretamente entre estados
+
+### ✨ Melhorado
+- **Design Visual**: Botões com aparência muito mais profissional e moderna
+- **Espaçamento**: Aumentado padding dos botões - `16px 32px` (settings) e `8px 16px` (admin bar)  
+- **Border Radius**: Cantos mais arredondados - `12px` (settings) e `8px` (admin bar)
+- **Efeitos Hover**: Animações suaves com elevação (`translateY(-2px)`) e sombras coloridas
+- **Sombras**: Box shadows subtis para melhor profundidade visual
+- **Responsivo**: Design otimizado para dispositivos móveis
+- **Feedback Visual**: Melhor indicação visual durante transições de estado
+
+### 🔧 Técnico
+- **Gestão de Nonce**: Centralizada no script localizado para melhor segurança
+- **Error Handling**: Tratamento de erros JavaScript mais robusto com logging
+- **Debug**: Adicionado console logging para facilitar troubleshooting
+- **CSS Animations**: Transições suaves com `transition: all 0.3s ease`
+- **Code Quality**: Refatoração do JavaScript para maior robustez
 
 ## [1.0.0] - 2025-01-06
 
