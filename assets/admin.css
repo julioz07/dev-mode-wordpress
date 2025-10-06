@@ -6,25 +6,31 @@
 #wp-admin-bar-devmode-toggle .ab-item {
     color: #fff !important;
     font-weight: 600;
-    padding: 8px 16px !important;
-    border-radius: 8px !important;
-    margin: 4px 8px !important;
+    padding: 4px 12px !important;
+    border-radius: 6px !important;
+    margin: 2px 4px !important;
+    transition: all 0.3s ease;
 }
 
-#wp-admin-bar-devmode-toggle .devmode-admin-bar-active {
+#wp-admin-bar-devmode-toggle .ab-item .devmode-admin-bar-active {
     background-color: #22c55e !important;
     color: #fff !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block;
 }
 
-#wp-admin-bar-devmode-toggle .devmode-admin-bar-protected {
+#wp-admin-bar-devmode-toggle .ab-item .devmode-admin-bar-protected {
     background-color: #ef4444 !important;
     color: #fff !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block;
 }
 
 #wp-admin-bar-devmode-toggle:hover .ab-item {
-    background-color: rgba(255, 255, 255, 0.2) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
     transform: translateY(-1px);
-    transition: all 0.3s ease;
 }
 
 /* Settings Page Styles */
@@ -194,9 +200,14 @@
     }
     
     #wp-admin-bar-devmode-toggle .ab-item {
-        padding: 6px 12px !important;
-        margin: 2px 4px !important;
+        padding: 3px 8px !important;
+        margin: 1px 2px !important;
         font-size: 12px !important;
+    }
+    
+    #wp-admin-bar-devmode-toggle .ab-item .devmode-admin-bar-active,
+    #wp-admin-bar-devmode-toggle .ab-item .devmode-admin-bar-protected {
+        padding: 3px 6px !important;
     }
 }
 
