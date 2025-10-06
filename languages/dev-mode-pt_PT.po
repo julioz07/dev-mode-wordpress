@@ -1,0 +1,189 @@
+# Dev.Mode Portuguese Translation
+# Copyright (C) 2025 Dev.Mode Team
+# This file is distributed under the same license as the Dev.Mode package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dev.Mode 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-06 12:00+0000\n"
+"PO-Revision-Date: 2025-01-06 12:00+0000\n"
+"Last-Translator: Dev.Mode Team\n"
+"Language-Team: Português\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: dev-mode.php:8
+msgid "Alternates between two states: Active (allows changes) and Protected (blocks modifications to core, plugins, themes, and user creation)."
+msgstr "Alterna entre dois estados: Ativo (permite alterações) e Protegido (bloqueia modificações ao core, plugins, temas e criação de utilizadores)."
+
+#: includes/class-devmode-core.php:72
+msgid "Plugin installations and updates are blocked while Dev.Mode is in Protected state."
+msgstr "Instalações e atualizações de plugins estão bloqueadas enquanto o Dev.Mode está em estado Protegido."
+
+#: includes/class-devmode-core.php:83
+msgid "Downloads are blocked while Dev.Mode is in Protected state."
+msgstr "Downloads estão bloqueados enquanto o Dev.Mode está em estado Protegido."
+
+#: includes/class-devmode-core.php:93
+msgid "Installations are blocked while Dev.Mode is in Protected state."
+msgstr "Instalações estão bloqueadas enquanto o Dev.Mode está em estado Protegido."
+
+#: includes/class-devmode-core.php:118
+msgid "User creation is blocked while Dev.Mode is in Protected state."
+msgstr "Criação de utilizadores está bloqueada enquanto o Dev.Mode está em estado Protegido."
+
+#: includes/class-devmode-core.php:119
+msgid "Access Denied"
+msgstr "Acesso Negado"
+
+#: includes/class-devmode-core.php:130
+msgid "User creation via REST API is blocked while Dev.Mode is in Protected state."
+msgstr "Criação de utilizadores via REST API está bloqueada enquanto o Dev.Mode está em estado Protegido."
+
+#: includes/class-devmode-core.php:146
+msgid "File editing is blocked while Dev.Mode is in Protected state."
+msgstr "Edição de ficheiros está bloqueada enquanto o Dev.Mode está em estado Protegido."
+
+#: includes/class-devmode-admin.php:32
+msgid "Dev.Mode Settings"
+msgstr "Definições Dev.Mode"
+
+#: includes/class-devmode-admin.php:33
+msgid "Dev.Mode"
+msgstr "Dev.Mode"
+
+#: includes/class-devmode-admin.php:49
+msgid "Dev.Mode Configuration"
+msgstr "Configuração Dev.Mode"
+
+#: includes/class-devmode-admin.php:57
+msgid "Current State"
+msgstr "Estado Atual"
+
+#: includes/class-devmode-admin.php:66
+msgid "Block User Creation"
+msgstr "Bloquear Criação de Utilizadores"
+
+#: includes/class-devmode-admin.php:70
+msgid "Block creation of new users when in Protected mode"
+msgstr "Bloquear criação de novos utilizadores quando em modo Protegido"
+
+#: includes/class-devmode-admin.php:77
+msgid "Disable File Modifications"
+msgstr "Desativar Modificações de Ficheiros"
+
+#: includes/class-devmode-admin.php:81
+msgid "Disable updates/installations/edits when in Protected mode"
+msgstr "Desativar atualizações/instalações/edições quando em modo Protegido"
+
+#: includes/class-devmode-admin.php:88
+msgid "Block PHP in Uploads"
+msgstr "Bloquear PHP no Uploads"
+
+#: includes/class-devmode-admin.php:92
+msgid "Apply rules to prevent PHP execution in /uploads directory"
+msgstr "Aplicar regras para impedir execução de PHP no diretório /uploads"
+
+#: includes/class-devmode-admin.php:99
+msgid "Auto-Revert Hours"
+msgstr "Horas para Auto-Reversão"
+
+#: includes/class-devmode-admin.php:103
+msgid "Automatically revert to Protected mode after X hours in Dev Mode (0 = disabled)"
+msgstr "Reverter automaticamente para modo Protegido após X horas em Dev Mode (0 = desativado)"
+
+#: includes/class-devmode-admin.php:112
+msgid "Configure Dev.Mode settings and security options."
+msgstr "Configure as definições do Dev.Mode e opções de segurança."
+
+#: includes/class-devmode-admin.php:125
+msgid " (will auto-revert in %s hours)"
+msgstr " (vai reverter automaticamente em %s horas)"
+
+#: includes/class-devmode-admin.php:133
+msgid "Dev Mode: Active"
+msgstr "Dev Mode: Ativo"
+
+#: includes/class-devmode-admin.php:133
+msgid "Dev Mode: Protected"
+msgstr "Dev Mode: Protegido"
+
+#: includes/class-devmode-admin.php:138
+msgid "Currently in Active state - changes are allowed."
+msgstr "Atualmente em estado Ativo - alterações são permitidas."
+
+#: includes/class-devmode-admin.php:140
+msgid "Currently in Protected state - changes are blocked."
+msgstr "Atualmente em estado Protegido - alterações estão bloqueadas."
+
+#: includes/class-devmode-admin.php:188
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Não tem permissões suficientes para aceder a esta página."
+
+#: includes/class-devmode-admin.php:200
+msgid "Recent Activity Log"
+msgstr "Log de Atividade Recente"
+
+#: includes/class-devmode-admin.php:212
+msgid "No activity logged yet."
+msgstr "Ainda não há atividade registada."
+
+#: includes/class-devmode-admin.php:234
+msgid "Click to toggle Dev.Mode state"
+msgstr "Clique para alternar o estado do Dev.Mode"
+
+#: includes/class-devmode-admin.php:276
+msgid "Are you sure you want to activate Dev Mode? This will allow file modifications and other changes."
+msgstr "Tem a certeza que quer ativar o Dev Mode? Isto vai permitir modificações de ficheiros e outras alterações."
+
+#: includes/class-devmode-admin.php:277
+msgid "Are you sure you want to enable Protected mode? This will block modifications and secure the site."
+msgstr "Tem a certeza que quer ativar o modo Protegido? Isto vai bloquear modificações e proteger o site."
+
+#: includes/class-devmode-admin.php:278
+msgid "An error occurred while toggling Dev Mode state."
+msgstr "Ocorreu um erro ao alternar o estado do Dev Mode."
+
+#: includes/class-devmode-admin.php:279
+msgid "Switching..."
+msgstr "A alternar..."
+
+#: includes/class-devmode-admin.php:290
+msgid "Security check failed."
+msgstr "Verificação de segurança falhou."
+
+#: includes/class-devmode-admin.php:295
+msgid "You do not have permission to perform this action."
+msgstr "Não tem permissão para executar esta ação."
+
+#: includes/class-devmode-admin.php:305
+msgid "Dev.Mode state changed to %s."
+msgstr "Estado do Dev.Mode alterado para %s."
+
+#: includes/class-devmode-admin.php:307
+msgid "Active"
+msgstr "Ativo"
+
+#: includes/class-devmode-admin.php:307
+msgid "Protected"
+msgstr "Protegido"
+
+#: includes/class-devmode-admin.php:312
+msgid "Failed to change Dev.Mode state."
+msgstr "Falhou ao alterar o estado do Dev.Mode."
+
+#: includes/class-devmode-admin.php:322
+msgid "Dev.Mode has been automatically reverted to Protected state."
+msgstr "Dev.Mode foi automaticamente revertido para o estado Protegido."
+
+#: includes/class-devmode-admin.php:332
+msgid "Dev.Mode state has been updated successfully."
+msgstr "Estado do Dev.Mode foi atualizado com sucesso."
+
+#: includes/class-devmode-admin.php:336
+msgid "Settings saved successfully."
+msgstr "Definições guardadas com sucesso."

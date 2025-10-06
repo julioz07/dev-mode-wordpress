@@ -1,0 +1,229 @@
+/**
+ * Dev.Mode Admin Styles
+ */
+
+/* Admin Bar Styles */
+#wp-admin-bar-devmode-toggle .ab-item {
+    color: #fff !important;
+    font-weight: 600;
+}
+
+#wp-admin-bar-devmode-toggle .devmode-admin-bar-active {
+    background-color: #22c55e !important;
+    color: #fff !important;
+}
+
+#wp-admin-bar-devmode-toggle .devmode-admin-bar-protected {
+    background-color: #ef4444 !important;
+    color: #fff !important;
+}
+
+#wp-admin-bar-devmode-toggle:hover .ab-item {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Settings Page Styles */
+.devmode-state-toggle {
+    margin: 20px 0;
+}
+
+.devmode-state-toggle button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.devmode-btn-active {
+    background-color: #22c55e !important;
+    color: #fff !important;
+    border-color: #16a34a !important;
+}
+
+.devmode-btn-active:hover {
+    background-color: #16a34a !important;
+    border-color: #15803d !important;
+}
+
+.devmode-btn-protected {
+    background-color: #ef4444 !important;
+    color: #fff !important;
+    border-color: #dc2626 !important;
+}
+
+.devmode-btn-protected:hover {
+    background-color: #dc2626 !important;
+    border-color: #b91c1c !important;
+}
+
+.devmode-btn-switching {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+}
+
+.devmode-state-info {
+    margin-left: 15px;
+    font-style: italic;
+    color: #666;
+}
+
+/* Log Entries */
+.devmode-log-entries {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+}
+
+.devmode-log-entry {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.devmode-log-entry:last-child {
+    border-bottom: none;
+}
+
+/* Status Indicators */
+.devmode-status-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.devmode-status-active {
+    background-color: #22c55e;
+}
+
+.devmode-status-protected {
+    background-color: #ef4444;
+}
+
+/* Form Styling */
+.devmode-settings-section {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.devmode-settings-section h3 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .devmode-state-toggle button {
+        min-width: 160px;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+    
+    .devmode-state-info {
+        display: block;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .devmode-log-entries {
+        font-size: 11px;
+    }
+}
+
+/* Accessibility */
+.devmode-state-toggle button:focus {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+/* WordPress Admin Notice Styling */
+.notice.devmode-notice {
+    border-left-color: #22c55e;
+}
+
+.notice.devmode-notice.notice-warning {
+    border-left-color: #f59e0b;
+}
+
+.notice.devmode-notice.notice-error {
+    border-left-color: #ef4444;
+}
+
+/* Loading States */
+.devmode-loading {
+    position: relative;
+}
+
+.devmode-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: devmode-spin 1s infinite linear;
+}
+
+@keyframes devmode-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Protection Status Display */
+.devmode-protection-status {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.devmode-protection-status .status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.devmode-protection-status .status-item:last-child {
+    border-bottom: none;
+}
+
+.devmode-protection-status .status-label {
+    font-weight: 600;
+}
+
+.devmode-protection-status .status-value {
+    color: #666;
+}
+
+.devmode-protection-status .status-enabled {
+    color: #22c55e;
+    font-weight: 600;
+}
+
+.devmode-protection-status .status-disabled {
+    color: #ef4444;
+    font-weight: 600;
+}

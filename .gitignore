@@ -1,0 +1,79 @@
+# Dev.Mode WordPress Plugin - Git Ignore
+
+# WordPress specific files
+wp-config.php
+.htaccess
+uploads/
+upgrade/
+wp-content/debug.log
+wp-content/cache/
+wp-content/backup*/
+
+# Plugin logs
+wp-content/devmode.log
+*.log
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.atom/
+.brackets.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Backup files
+*.bak
+*.backup
+*.sql
+*.orig
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Dependencies (if using build tools)
+node_modules/
+vendor/
+bower_components/
+
+# Package managers
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+composer.lock
+package-lock.json
+
+# Build outputs (if using build tools)
+dist/
+build/
+assets/*.min.css
+assets/*.min.js
+*.map
+
+# Development tools
+.sass-cache/
+.nyc_output/
+coverage/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Translation files (keep .pot and .po, ignore .mo)
+*.mo
