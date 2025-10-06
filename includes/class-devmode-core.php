@@ -52,6 +52,10 @@ class Core {
         add_filter('upgrader_pre_install', [$this, 'block_upgrader_install'], 10, 2);
         add_filter('file_mod_allowed', [$this, 'block_file_modifications'], 10, 2);
         
+        // Block file uploads with dangerous extensions
+        add_filter('upload_mimes', [$this, 'block_dangerous_uploads'], 1);
+        add_filter('wp_handle_upload_prefilter', [$this, 'block_php_uploads'], 1);
+        
         // Block user creation and management
         $options = devmode_get_options();
         if ($options['block_user_creation']) {
@@ -69,6 +73,12 @@ class Core {
      */
     public function block_plugins_api($result, $action, $args) {
         if (in_array($action, ['plugin_information', 'query_plugins'])) {
+            $this->log_blocked_action('plugins_api', [
+                'action' => $action,
+                'args' => $args,
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown'
+            ]);
+            
             return new \WP_Error(
                 'devmode_protected',
                 __('Plugin installations and updates are blocked while Dev.Mode is in Protected state.', 'dev-mode')
@@ -81,6 +91,11 @@ class Core {
      * Block upgrader downloads
      */
     public function block_upgrader_download($reply, $package, $upgrader) {
+        $this->log_blocked_action('upgrader_download', [
+            'package' => $package,
+            'upgrader_class' => get_class($upgrader)
+        ]);
+        
         return new \WP_Error(
             'devmode_protected',
             __('Downloads are blocked while Dev.Mode is in Protected state.', 'dev-mode')
@@ -91,6 +106,11 @@ class Core {
      * Block upgrader installations
      */
     public function block_upgrader_install($response, $hook_extra) {
+        $this->log_blocked_action('upgrader_install', [
+            'hook_extra' => $hook_extra,
+            'type' => $hook_extra['type'] ?? 'unknown'
+        ]);
+        
         return new \WP_Error(
             'devmode_protected',
             __('Installations are blocked while Dev.Mode is in Protected state.', 'dev-mode')
@@ -101,7 +121,63 @@ class Core {
      * Block file modifications
      */
     public function block_file_modifications($allow, $context) {
+        $this->log_blocked_action('file_modification', [
+            'context' => $context,
+            'request_uri' => $_SERVER['REQUEST_URI'] ?? '',
+            'referer' => wp_get_referer()
+        ]);
+        
         return false;
+    }
+    
+    /**
+     * Block dangerous file uploads by removing dangerous MIME types
+     */
+    public function block_dangerous_uploads($mimes) {
+        $dangerous_extensions = [
+            'php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'pht', 'phps',
+            'asp', 'aspx', 'jsp', 'cgi', 'pl', 'py', 'rb', 'sh', 'exe', 'bat',
+            'com', 'scr', 'vbs', 'ws', 'wsf'
+        ];
+        
+        foreach ($dangerous_extensions as $ext) {
+            if (isset($mimes[$ext])) {
+                unset($mimes[$ext]);
+            }
+        }
+        
+        return $mimes;
+    }
+    
+    /**
+     * Block PHP file uploads with detailed logging
+     */
+    public function block_php_uploads($file) {
+        $filename = $file['name'] ?? '';
+        $file_ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        
+        $dangerous_extensions = [
+            'php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'pht', 'phps',
+            'asp', 'aspx', 'jsp', 'cgi', 'pl', 'py', 'rb', 'sh', 'exe', 'bat',
+            'com', 'scr', 'vbs', 'ws', 'wsf'
+        ];
+        
+        if (in_array($file_ext, $dangerous_extensions)) {
+            $this->log_blocked_action('dangerous_file_upload', [
+                'filename' => $filename,
+                'extension' => $file_ext,
+                'size' => $file['size'] ?? 0,
+                'type' => $file['type'] ?? 'unknown',
+                'upload_path' => $_SERVER['REQUEST_URI'] ?? ''
+            ]);
+            
+            $file['error'] = sprintf(
+                __('File upload blocked: .%s files are not allowed while Dev.Mode is in Protected state.', 'dev-mode'),
+                $file_ext
+            );
+        }
+        
+        return $file;
     }
     
     /**
@@ -111,6 +187,12 @@ class Core {
         $blocked_caps = ['create_users', 'promote_users', 'delete_users', 'edit_users'];
         
         if (in_array($cap, $blocked_caps)) {
+            $this->log_blocked_action('user_capability', [
+                'capability' => $cap,
+                'target_user_id' => $args[0] ?? null,
+                'requesting_user_id' => $user_id
+            ]);
+            
             $caps[] = 'do_not_allow';
         }
         
@@ -121,6 +203,11 @@ class Core {
      * Block user registration
      */
     public function block_user_registration($user_id) {
+        $this->log_blocked_action('user_registration', [
+            'attempted_user_id' => $user_id,
+            'registration_method' => 'admin_panel'
+        ]);
+        
         if (is_admin()) {
             wp_die(
                 __('User creation is blocked while Dev.Mode is in Protected state.', 'dev-mode'),
@@ -134,6 +221,15 @@ class Core {
      * Block REST API user creation
      */
     public function block_rest_user_creation($prepared_user, $request) {
+        $this->log_blocked_action('rest_user_creation', [
+            'user_data' => [
+                'username' => $prepared_user->user_login ?? 'unknown',
+                'email' => $prepared_user->user_email ?? 'unknown'
+            ],
+            'request_method' => $request->get_method(),
+            'user_agent' => $request->get_header('User-Agent')
+        ]);
+        
         return new \WP_Error(
             'devmode_protected',
             __('User creation via REST API is blocked while Dev.Mode is in Protected state.', 'dev-mode'),
@@ -150,6 +246,11 @@ class Core {
         $blocked_pages = ['plugin-editor.php', 'theme-editor.php'];
         
         if (in_array($pagenow, $blocked_pages)) {
+            $this->log_blocked_action('admin_file_editing', [
+                'page' => $pagenow,
+                'query_params' => $_GET
+            ]);
+            
             wp_die(
                 __('File editing is blocked while Dev.Mode is in Protected state.', 'dev-mode'),
                 __('Access Denied', 'dev-mode'),
@@ -223,24 +324,90 @@ class Core {
      * Log state changes to file
      */
     private function log_state_change($new_state, $old_state) {
-        $log_file = WP_CONTENT_DIR . '/devmode.log';
         $current_user = wp_get_current_user();
         $timestamp = current_time('Y-m-d H:i:s');
         
         $log_entry = sprintf(
-            "[%s] State changed from %s to %s by user %s (ID: %d)\n",
+            "[%s] STATE_CHANGE: %s → %s | User: %s (ID: %d) | IP: %s\n",
             $timestamp,
-            $old_state,
-            $new_state,
+            strtoupper($old_state),
+            strtoupper($new_state),
             $current_user->user_login,
-            $current_user->ID
+            $current_user->ID,
+            $this->get_client_ip()
         );
         
-        // Rotate log if it gets too large (> 1MB)
-        if (file_exists($log_file) && filesize($log_file) > 1048576) {
+        $this->write_to_log($log_entry);
+    }
+    
+    /**
+     * Log blocked actions with detailed information
+     */
+    private function log_blocked_action($action_type, $details = []) {
+        $current_user = wp_get_current_user();
+        $timestamp = current_time('Y-m-d H:i:s');
+        
+        // Format details for logging
+        $details_str = '';
+        if (!empty($details)) {
+            $formatted_details = [];
+            foreach ($details as $key => $value) {
+                if (is_array($value)) {
+                    $value = json_encode($value);
+                } elseif (is_object($value)) {
+                    $value = get_class($value);
+                }
+                $formatted_details[] = $key . '=' . $value;
+            }
+            $details_str = ' | Details: ' . implode(', ', $formatted_details);
+        }
+        
+        $log_entry = sprintf(
+            "[%s] BLOCKED_%s: Action blocked in Protected mode | User: %s (ID: %d) | IP: %s%s\n",
+            $timestamp,
+            strtoupper($action_type),
+            $current_user->user_login ?: 'guest',
+            $current_user->ID ?: 0,
+            $this->get_client_ip(),
+            $details_str
+        );
+        
+        $this->write_to_log($log_entry);
+    }
+    
+    /**
+     * Get client IP address
+     */
+    private function get_client_ip() {
+        $ip_fields = ['HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR'];
+        
+        foreach ($ip_fields as $field) {
+            if (!empty($_SERVER[$field])) {
+                $ip = $_SERVER[$field];
+                // Handle comma-separated IPs (from proxies)
+                if (strpos($ip, ',') !== false) {
+                    $ip = trim(explode(',', $ip)[0]);
+                }
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                    return $ip;
+                }
+            }
+        }
+        
+        return $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    }
+    
+    /**
+     * Write entry to log file with rotation
+     */
+    private function write_to_log($log_entry) {
+        $log_file = WP_CONTENT_DIR . '/devmode.log';
+        
+        // Rotate log if it gets too large (> 2MB)
+        if (file_exists($log_file) && filesize($log_file) > 2097152) {
             $old_log = file_get_contents($log_file);
             $lines = explode("\n", $old_log);
-            $lines = array_slice($lines, -500); // Keep last 500 lines
+            $lines = array_slice($lines, -1000); // Keep last 1000 lines
             file_put_contents($log_file, implode("\n", $lines));
         }
         

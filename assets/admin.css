@@ -77,20 +77,54 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 15px;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
     font-family: 'Courier New', monospace;
     font-size: 12px;
 }
 
 .devmode-log-entry {
-    padding: 5px 0;
+    padding: 8px 0;
     border-bottom: 1px solid #eee;
     color: #333;
+    line-height: 1.4;
 }
 
 .devmode-log-entry:last-child {
     border-bottom: none;
+}
+
+.devmode-log-entry.state-change {
+    color: #0073aa;
+    font-weight: 600;
+}
+
+.devmode-log-entry.blocked-action {
+    color: #d63638;
+    background-color: #fff2f2;
+    padding: 8px;
+    margin: 2px 0;
+    border-radius: 3px;
+    border-left: 3px solid #d63638;
+}
+
+/* Log Legend */
+.devmode-log-legend {
+    background: #f0f0f1;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 15px 20px;
+    margin: 15px 0;
+}
+
+.devmode-log-legend li {
+    margin: 8px 0;
+    font-size: 13px;
+}
+
+.devmode-log-legend strong {
+    color: #d63638;
+    font-family: 'Courier New', monospace;
 }
 
 /* Status Indicators */

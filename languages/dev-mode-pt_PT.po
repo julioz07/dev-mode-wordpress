@@ -187,3 +187,47 @@ msgstr "Estado do Dev.Mode foi atualizado com sucesso."
 #: includes/class-devmode-admin.php:336
 msgid "Settings saved successfully."
 msgstr "Definições guardadas com sucesso."
+
+#: includes/class-devmode-core.php:150
+msgid "File upload blocked: .%s files are not allowed while Dev.Mode is in Protected state."
+msgstr "Upload bloqueado: ficheiros .%s não são permitidos enquanto o Dev.Mode está em estado Protegido."
+
+#: includes/class-devmode-admin.php:218
+msgid "Security Activity Log"
+msgstr "Log de Atividade de Segurança"
+
+#: includes/class-devmode-admin.php:219
+msgid "Shows all blocked actions and state changes. Logs are automatically rotated when they exceed 2MB."
+msgstr "Mostra todas as ações bloqueadas e mudanças de estado. Os logs são automaticamente rodados quando excedem 2MB."
+
+#: includes/class-devmode-admin.php:223
+msgid "Log Legend"
+msgstr "Legenda do Log"
+
+#: includes/class-devmode-admin.php:225
+msgid "Dev.Mode state was changed between Active and Protected"
+msgstr "Estado do Dev.Mode foi alterado entre Ativo e Protegido"
+
+#: includes/class-devmode-admin.php:226
+msgid "Attempt to upload PHP or other dangerous files"
+msgstr "Tentativa de upload de PHP ou outros ficheiros perigosos"
+
+#: includes/class-devmode-admin.php:227
+msgid "Attempt to modify files through WordPress"
+msgstr "Tentativa de modificar ficheiros através do WordPress"
+
+#: includes/class-devmode-admin.php:228
+msgid "Attempt to access plugin installation/update API"
+msgstr "Tentativa de aceder à API de instalação/atualização de plugins"
+
+#: includes/class-devmode-admin.php:229
+msgid "Attempt to create new user accounts"
+msgstr "Tentativa de criar novas contas de utilizador"
+
+#: includes/class-devmode-admin.php:230
+msgid "Attempt to access file editors in admin"
+msgstr "Tentativa de aceder aos editores de ficheiros no admin"
+
+#: includes/class-devmode-admin.php:252
+msgid "Refresh Log"
+msgstr "Atualizar Log"

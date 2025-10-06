@@ -213,8 +213,21 @@ class Admin {
             
             <hr>
             
-            <h2><?php _e('Recent Activity Log', 'dev-mode'); ?></h2>
+            <h2><?php _e('Security Activity Log', 'dev-mode'); ?></h2>
+            <p class="description"><?php _e('Shows all blocked actions and state changes. Logs are automatically rotated when they exceed 2MB.', 'dev-mode'); ?></p>
             <?php $this->display_log_entries(); ?>
+            
+            <hr>
+            
+            <h3><?php _e('Log Legend', 'dev-mode'); ?></h3>
+            <ul class="devmode-log-legend">
+                <li><strong>STATE_CHANGE:</strong> <?php _e('Dev.Mode state was changed between Active and Protected', 'dev-mode'); ?></li>
+                <li><strong>BLOCKED_DANGEROUS_FILE_UPLOAD:</strong> <?php _e('Attempt to upload PHP or other dangerous files', 'dev-mode'); ?></li>
+                <li><strong>BLOCKED_FILE_MODIFICATION:</strong> <?php _e('Attempt to modify files through WordPress', 'dev-mode'); ?></li>
+                <li><strong>BLOCKED_PLUGINS_API:</strong> <?php _e('Attempt to access plugin installation/update API', 'dev-mode'); ?></li>
+                <li><strong>BLOCKED_USER_CREATION:</strong> <?php _e('Attempt to create new user accounts', 'dev-mode'); ?></li>
+                <li><strong>BLOCKED_ADMIN_FILE_EDITING:</strong> <?php _e('Attempt to access file editors in admin', 'dev-mode'); ?></li>
+            </ul>
         </div>
         <?php
     }
@@ -225,7 +238,7 @@ class Admin {
     private function display_log_entries() {
         if (class_exists('DevMode\\Core')) {
             $core = new Core();
-            $entries = $core->get_log_entries(10);
+            $entries = $core->get_log_entries(20); // Show last 20 entries
             
             if (empty($entries)) {
                 echo '<p>' . __('No activity logged yet.', 'dev-mode') . '</p>';
@@ -234,9 +247,21 @@ class Admin {
             
             echo '<div class="devmode-log-entries">';
             foreach ($entries as $entry) {
-                echo '<div class="devmode-log-entry">' . esc_html($entry) . '</div>';
+                $entry_class = 'devmode-log-entry';
+                
+                // Add special styling for different log types
+                if (strpos($entry, 'STATE_CHANGE') !== false) {
+                    $entry_class .= ' state-change';
+                } elseif (strpos($entry, 'BLOCKED_') !== false) {
+                    $entry_class .= ' blocked-action';
+                }
+                
+                echo '<div class="' . $entry_class . '">' . esc_html($entry) . '</div>';
             }
             echo '</div>';
+            
+            // Add refresh button
+            echo '<p><button type="button" class="button" onclick="location.reload()">' . __('Refresh Log', 'dev-mode') . '</button></p>';
         }
     }
     

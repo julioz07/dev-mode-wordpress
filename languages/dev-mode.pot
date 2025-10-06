@@ -188,3 +188,47 @@ msgstr ""
 #: includes/class-devmode-admin.php:336
 msgid "Settings saved successfully."
 msgstr ""
+
+#: includes/class-devmode-core.php:150
+msgid "File upload blocked: .%s files are not allowed while Dev.Mode is in Protected state."
+msgstr ""
+
+#: includes/class-devmode-admin.php:218
+msgid "Security Activity Log"
+msgstr ""
+
+#: includes/class-devmode-admin.php:219
+msgid "Shows all blocked actions and state changes. Logs are automatically rotated when they exceed 2MB."
+msgstr ""
+
+#: includes/class-devmode-admin.php:223
+msgid "Log Legend"
+msgstr ""
+
+#: includes/class-devmode-admin.php:225
+msgid "Dev.Mode state was changed between Active and Protected"
+msgstr ""
+
+#: includes/class-devmode-admin.php:226
+msgid "Attempt to upload PHP or other dangerous files"
+msgstr ""
+
+#: includes/class-devmode-admin.php:227
+msgid "Attempt to modify files through WordPress"
+msgstr ""
+
+#: includes/class-devmode-admin.php:228
+msgid "Attempt to access plugin installation/update API"
+msgstr ""
+
+#: includes/class-devmode-admin.php:229
+msgid "Attempt to create new user accounts"
+msgstr ""
+
+#: includes/class-devmode-admin.php:230
+msgid "Attempt to access file editors in admin"
+msgstr ""
+
+#: includes/class-devmode-admin.php:252
+msgid "Refresh Log"
+msgstr ""
