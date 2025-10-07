@@ -5,7 +5,7 @@
 ![WordPress](https://img.shields.io/badge/WordPress-6.0%2B-blue)
 ![PHP](https://img.shields.io/badge/PHP-8.1%2B-purple)
 ![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-orange)
-![Version](https://img.shields.io/badge/Version-1.0.0-green)
+![Version](https://img.shields.io/badge/Version-1.1.1-green)
 
 **🌍 Language / Idioma:**  
 [![Português](https://img.shields.io/badge/🇵🇹-Português-green?style=for-the-badge)](README.md) [![English](https://img.shields.io/badge/🇺🇸-English-blue?style=for-the-badge)](README_EN.md)
