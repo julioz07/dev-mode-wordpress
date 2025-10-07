@@ -140,7 +140,6 @@ This plugin is licensed under [Creative Commons BY-NC-SA 4.0](LICENSE).
 - 🌐 **Website**: [julio-cr.pt](https://julio-cr.pt/)
 - 💼 **LinkedIn**: [juliocesarrodrigues07](https://www.linkedin.com/in/juliocesarrodrigues07/)
 - 🐙 **GitHub**: [julioz07](https://github.com/julioz07)
-- 📧 **Company**: JCR Digital
 
 ### 🤖 Developed with AI
 

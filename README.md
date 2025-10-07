@@ -75,7 +75,7 @@
 - Proteger automaticamente em produção
 - Prevenir modificações acidentais
 
-### � Para Agências
+### 🏢 Para Agências
 - Proteger sites de clientes
 - Permitir acesso controlado para updates
 - Manter log de todas as alterações
@@ -132,7 +132,7 @@ Este plugin está licenciado sob [Creative Commons BY-NC-SA 4.0](LICENSE).
 - ❌ **Uso comercial** sem autorização
 - ❌ **Venda ou redistribuição** comercial
 
-## �‍💻 Autor
+## 👨‍💻 Autor
 
 **Júlio Rodrigues** - WordPress & Frontend Developer  
 🌍 Portugal | 🔧 10+ anos de experiência  
@@ -140,13 +140,12 @@ Este plugin está licenciado sob [Creative Commons BY-NC-SA 4.0](LICENSE).
 - 🌐 **Website**: [julio-cr.pt](https://julio-cr.pt/)
 - 💼 **LinkedIn**: [juliocesarrodrigues07](https://www.linkedin.com/in/juliocesarrodrigues07/)
 - 🐙 **GitHub**: [julioz07](https://github.com/julioz07)
-- 📧 **Empresa**: JCR Digital
 
 ### 🤖 Desenvolvido com o apoio de IA
 
 Este plugin foi desenvolvido com a assistência do **Claude Sonnet** (Anthropic AI), demonstrando a colaboração entre desenvolvimento humano e inteligência artificial.
 
-## �🙏 Agradecimentos
+## 🙏 Agradecimentos
 
 Obrigado a todos os contribuidores que ajudam a tornar este plugin melhor!
 
