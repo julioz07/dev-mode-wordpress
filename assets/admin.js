@@ -120,7 +120,7 @@
             nonce = devmode_ajax.nonce;
         } else {
             // Fallback: refresh page to get updated state
-            console.log('No nonce available, refreshing page');
+            // No nonce available, refreshing page
             window.location.reload();
             return;
         }
@@ -143,7 +143,7 @@
                 }
             },
             error: function(xhr, status, error) {
-                console.log('AJAX Error:', xhr, status, error);
+                // AJAX Error occurred
                 handleToggleError({
                     message: devmode_ajax.messages.error + ' ' + error
                 }, $button);
@@ -208,7 +208,7 @@
         // For admin bar, refresh page if error persists
         if (!$button) {
             setTimeout(function() {
-                console.log('Admin bar toggle error, refreshing page');
+                // Admin bar toggle error, refreshing page
                 window.location.reload();
             }, 2000);
         }

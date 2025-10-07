@@ -3,13 +3,13 @@
  * Plugin Name: Dev.Mode
  * Plugin URI: https://github.com/julioz07/dev-mode-wordpress
  * Description: Alternates between two states: Active (allows changes) and Protected (blocks modifications to core, plugins, themes, and user creation). Free for personal and non-commercial use.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Júlio Rodrigues
  * Author URI: https://julio-cr.pt/
  * Text Domain: dev-mode
  * Domain Path: /languages
  * Requires at least: 6.0
- * Tested up to: 6.4
+ * Tested up to: 6.6
  * Requires PHP: 8.1
  * License: CC BY-NC-SA 4.0
  * License URI: https://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -29,7 +29,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('DEVMODE_VERSION', '1.1.0');
+define('DEVMODE_VERSION', '1.1.1');
 define('DEVMODE_PLUGIN_FILE', __FILE__);
 define('DEVMODE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DEVMODE_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -133,6 +133,11 @@ add_action('plugins_loaded', 'devmode_init');
  * Plugin activation hook
  */
 function devmode_activate() {
+    // Check if user has proper permissions
+    if (!current_user_can('activate_plugins')) {
+        wp_die(__('You do not have sufficient permissions to activate plugins.', 'dev-mode'));
+    }
+    
     // Set default state to protected on activation
     if (!get_option('devmode_state')) {
         update_option('devmode_state', 'protected');
@@ -157,6 +162,11 @@ register_activation_hook(__FILE__, 'devmode_activate');
  * Plugin deactivation hook
  */
 function devmode_deactivate() {
+    // Check if user has proper permissions
+    if (!current_user_can('deactivate_plugins')) {
+        wp_die(__('You do not have sufficient permissions to deactivate plugins.', 'dev-mode'));
+    }
+    
     // Clear scheduled auto-revert events
     wp_clear_scheduled_hook('devmode_auto_revert');
     

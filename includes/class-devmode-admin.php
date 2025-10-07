@@ -130,17 +130,17 @@ class Admin {
         }
         
         echo '<div class="devmode-state-toggle">';
-        echo '<button type="button" id="devmode-toggle-btn" class="button button-large devmode-btn-' . $current_state . '" data-nonce="' . wp_create_nonce('devmode_toggle') . '">';
-        echo $is_active ? __('Dev Mode: Active', 'dev-mode') : __('Dev Mode: Protected', 'dev-mode');
+        echo '<button type="button" id="devmode-toggle-btn" class="button button-large devmode-btn-' . esc_attr($current_state) . '" data-nonce="' . esc_attr(wp_create_nonce('devmode_toggle')) . '">';
+        echo $is_active ? esc_html__('Dev Mode: Active', 'dev-mode') : esc_html__('Dev Mode: Protected', 'dev-mode');
         echo '</button>';
-        echo '<span class="devmode-state-info">' . $auto_revert_info . '</span>';
+        echo '<span class="devmode-state-info">' . esc_html($auto_revert_info) . '</span>';
         echo '</div>';
         
         echo '<p class="description">';
         if ($is_active) {
-            echo __('Currently in Active state - changes are allowed.', 'dev-mode');
+            echo esc_html__('Currently in Active state - changes are allowed.', 'dev-mode');
         } else {
-            echo __('Currently in Protected state - changes are blocked.', 'dev-mode');
+            echo esc_html__('Currently in Protected state - changes are blocked.', 'dev-mode');
         }
         echo '</p>';
     }
@@ -175,6 +175,11 @@ class Admin {
      * Validate options
      */
     public function validate_options($input) {
+        // Check permissions
+        if (!current_user_can('manage_options')) {
+            wp_die(__('You do not have sufficient permissions to modify these settings.', 'dev-mode'));
+        }
+        
         $output = [];
         
         // Validate checkboxes
@@ -184,10 +189,17 @@ class Admin {
         }
         
         // Validate auto-revert hours
-        $output['auto_revert_hours'] = isset($input['auto_revert_hours']) ? intval($input['auto_revert_hours']) : 0;
-        if ($output['auto_revert_hours'] < 0 || $output['auto_revert_hours'] > 168) {
-            $output['auto_revert_hours'] = 0;
+        $auto_revert_hours = isset($input['auto_revert_hours']) ? intval($input['auto_revert_hours']) : 0;
+        if ($auto_revert_hours < 0 || $auto_revert_hours > 168) {
+            add_settings_error(
+                'devmode_options',
+                'auto_revert_hours',
+                __('Auto-revert hours must be between 0 and 168 (1 week).', 'dev-mode'),
+                'error'
+            );
+            $auto_revert_hours = 0;
         }
+        $output['auto_revert_hours'] = $auto_revert_hours;
         
         return $output;
     }
@@ -337,14 +349,23 @@ class Admin {
      * Handle AJAX toggle request
      */
     public function handle_ajax_toggle() {
+        // Check if it's a valid AJAX request
+        if (!wp_doing_ajax()) {
+            wp_die(__('Invalid request method.', 'dev-mode'));
+        }
+        
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'devmode_toggle')) {
-            wp_die(__('Security check failed.', 'dev-mode'));
+        if (!wp_verify_nonce(sanitize_text_field($_POST['nonce'] ?? ''), 'devmode_toggle')) {
+            wp_send_json_error([
+                'message' => __('Security check failed.', 'dev-mode')
+            ]);
         }
         
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have permission to perform this action.', 'dev-mode'));
+            wp_send_json_error([
+                'message' => __('You do not have permission to perform this action.', 'dev-mode')
+            ]);
         }
         
         // Toggle state

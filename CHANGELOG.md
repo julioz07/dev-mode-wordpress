@@ -29,7 +29,35 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - **CSS Animations**: Transições suaves com `transition: all 0.3s ease`
 - **Code Quality**: Refatoração do JavaScript para maior robustez
 
-## [1.0.0] - 2025-01-06
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.1.1] - 2025-01-07
+
+### Security
+- **FIXED**: Sanitized all direct access to superglobal variables ($_GET, $_POST, $_SERVER)
+- **FIXED**: Replaced unsafe `file_get_contents()` calls with secure wrapper function
+- **FIXED**: Enhanced input validation and output escaping throughout the codebase
+- **FIXED**: Added proper CSRF protection for AJAX requests
+- **FIXED**: Improved permission checks in activation/deactivation hooks
+- **FIXED**: Enhanced settings validation with user capability checks
+- **FIXED**: Removed debug console.log statements from JavaScript
+
+### Improved
+- Added comprehensive input sanitization for all user inputs
+- Enhanced error handling in file operations
+- Improved nonce verification across all AJAX endpoints
+- Added settings validation error messages
+- Updated "Tested up to" WordPress version to 6.6
+
+### Technical
+- Added `safe_file_get_contents()` method with path validation
+- Enhanced IP detection with proper sanitization
+- Improved output escaping using `esc_html()` and `esc_attr()`
+- Added proper capability checks for all administrative functions
+
+## [1.1.0] - 2025-01-06
 
 ### ✨ Adicionado
 - **Toggle de Estados**: Alternância entre modo Ativo (desenvolvimento) e Protegido (produção)

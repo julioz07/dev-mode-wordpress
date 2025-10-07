@@ -23,6 +23,23 @@ class Hardener {
     }
     
     /**
+     * Safe file_get_contents wrapper with local file validation
+     */
+    private function safe_file_get_contents($file_path) {
+        // Ensure it's a local file path and within WordPress directory structure
+        $real_path = realpath($file_path);
+        $wp_content_dir = realpath(WP_CONTENT_DIR);
+        $abspath = realpath(ABSPATH);
+        
+        if ($real_path === false || 
+            (strpos($real_path, $wp_content_dir) !== 0 && strpos($real_path, $abspath) !== 0)) {
+            return false;
+        }
+        
+        return file_get_contents($real_path);
+    }
+    
+    /**
      * Handle state changes
      */
     public function handle_state_change($new_state, $old_state) {
@@ -73,7 +90,10 @@ class Hardener {
         // Remove .htaccess protection
         $htaccess_file = $uploads_path . '/.htaccess';
         if (file_exists($htaccess_file)) {
-            $content = file_get_contents($htaccess_file);
+            $content = $this->safe_file_get_contents($htaccess_file);
+            if ($content === false) {
+                return false;
+            }
             
             // Remove only DevMode-specific rules
             $content = preg_replace('/# BEGIN DevMode Protection.*?# END DevMode Protection\s*/s', '', $content);
@@ -88,7 +108,10 @@ class Hardener {
         // Remove web.config protection
         $webconfig_file = $uploads_path . '/web.config';
         if (file_exists($webconfig_file)) {
-            $content = file_get_contents($webconfig_file);
+            $content = $this->safe_file_get_contents($webconfig_file);
+            if ($content === false) {
+                return false;
+            }
             
             // Remove only DevMode-specific rules
             $content = preg_replace('/<!-- BEGIN DevMode Protection -->.*?<!-- END DevMode Protection -->\s*/s', '', $content);
@@ -132,7 +155,10 @@ class Hardener {
         // Read existing content
         $existing_content = '';
         if (file_exists($htaccess_file)) {
-            $existing_content = file_get_contents($htaccess_file);
+            $existing_content = $this->safe_file_get_contents($htaccess_file);
+            if ($existing_content === false) {
+                $existing_content = '';
+            }
             
             // Remove any existing DevMode protection rules
             $existing_content = preg_replace('/# BEGIN DevMode Protection.*?# END DevMode Protection\s*/s', '', $existing_content);
@@ -157,7 +183,7 @@ class Hardener {
         $webconfig_file = $uploads_path . '/web.config';
         
         // Check if we're likely on an IIS server
-        if (!isset($_SERVER['SERVER_SOFTWARE']) || stripos($_SERVER['SERVER_SOFTWARE'], 'microsoft-iis') === false) {
+        if (!isset($_SERVER['SERVER_SOFTWARE']) || stripos(sanitize_text_field($_SERVER['SERVER_SOFTWARE']), 'microsoft-iis') === false) {
             return false;
         }
         
@@ -202,7 +228,10 @@ XML;
         // Read existing content
         $existing_content = '';
         if (file_exists($webconfig_file)) {
-            $existing_content = file_get_contents($webconfig_file);
+            $existing_content = $this->safe_file_get_contents($webconfig_file);
+            if ($existing_content === false) {
+                $existing_content = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+            }
             
             // Remove any existing DevMode protection rules
             $existing_content = preg_replace('/<!-- BEGIN DevMode Protection -->.*?<!-- END DevMode Protection -->\s*/s', '', $existing_content);
@@ -238,14 +267,14 @@ XML;
         
         // Check .htaccess
         if (file_exists($htaccess_file)) {
-            $content = file_get_contents($htaccess_file);
-            $htaccess_protected = strpos($content, '# BEGIN DevMode Protection') !== false;
+            $content = $this->safe_file_get_contents($htaccess_file);
+            $htaccess_protected = ($content !== false) && strpos($content, '# BEGIN DevMode Protection') !== false;
         }
         
         // Check web.config
         if (file_exists($webconfig_file)) {
-            $content = file_get_contents($webconfig_file);
-            $webconfig_protected = strpos($content, '<!-- BEGIN DevMode Protection -->') !== false;
+            $content = $this->safe_file_get_contents($webconfig_file);
+            $webconfig_protected = ($content !== false) && strpos($content, '<!-- BEGIN DevMode Protection -->') !== false;
         }
         
         return $htaccess_protected || $webconfig_protected;
@@ -269,14 +298,14 @@ XML;
         
         // Check .htaccess protection
         if ($status['htaccess_exists']) {
-            $content = file_get_contents($uploads_path . '/.htaccess');
-            $status['htaccess_protected'] = strpos($content, '# BEGIN DevMode Protection') !== false;
+            $content = $this->safe_file_get_contents($uploads_path . '/.htaccess');
+            $status['htaccess_protected'] = ($content !== false) && strpos($content, '# BEGIN DevMode Protection') !== false;
         }
         
         // Check web.config protection
         if ($status['webconfig_exists']) {
-            $content = file_get_contents($uploads_path . '/web.config');
-            $status['webconfig_protected'] = strpos($content, '<!-- BEGIN DevMode Protection -->') !== false;
+            $content = $this->safe_file_get_contents($uploads_path . '/web.config');
+            $status['webconfig_protected'] = ($content !== false) && strpos($content, '<!-- BEGIN DevMode Protection -->') !== false;
         }
         
         return $status;

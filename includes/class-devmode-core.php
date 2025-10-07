@@ -76,7 +76,7 @@ class Core {
             $this->log_blocked_action('plugins_api', [
                 'action' => $action,
                 'args' => $args,
-                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown'
+                'user_agent' => sanitize_text_field($_SERVER['HTTP_USER_AGENT'] ?? 'Unknown')
             ]);
             
             return new \WP_Error(
@@ -93,7 +93,8 @@ class Core {
     public function block_upgrader_download($reply, $package, $upgrader) {
         $this->log_blocked_action('upgrader_download', [
             'package' => $package,
-            'upgrader_class' => get_class($upgrader)
+            'upgrader_class' => get_class($upgrader),
+            'request_uri' => sanitize_text_field($_SERVER['REQUEST_URI'] ?? '')
         ]);
         
         return new \WP_Error(
@@ -168,7 +169,7 @@ class Core {
                 'extension' => $file_ext,
                 'size' => $file['size'] ?? 0,
                 'type' => $file['type'] ?? 'unknown',
-                'upload_path' => $_SERVER['REQUEST_URI'] ?? ''
+                'upload_path' => sanitize_text_field($_SERVER['REQUEST_URI'] ?? '')
             ]);
             
             $file['error'] = sprintf(
@@ -248,7 +249,7 @@ class Core {
         if (in_array($pagenow, $blocked_pages)) {
             $this->log_blocked_action('admin_file_editing', [
                 'page' => $pagenow,
-                'query_params' => $_GET
+                'query_params' => array_map('sanitize_text_field', $_GET)
             ]);
             
             wp_die(
@@ -383,7 +384,7 @@ class Core {
         
         foreach ($ip_fields as $field) {
             if (!empty($_SERVER[$field])) {
-                $ip = $_SERVER[$field];
+                $ip = sanitize_text_field($_SERVER[$field]);
                 // Handle comma-separated IPs (from proxies)
                 if (strpos($ip, ',') !== false) {
                     $ip = trim(explode(',', $ip)[0]);
@@ -394,7 +395,7 @@ class Core {
             }
         }
         
-        return $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        return sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? 'unknown');
     }
     
     /**
@@ -405,14 +406,31 @@ class Core {
         
         // Rotate log if it gets too large (> 2MB)
         if (file_exists($log_file) && filesize($log_file) > 2097152) {
-            $old_log = file_get_contents($log_file);
-            $lines = explode("\n", $old_log);
-            $lines = array_slice($lines, -1000); // Keep last 1000 lines
-            file_put_contents($log_file, implode("\n", $lines));
+            $old_log = $this->safe_file_get_contents($log_file);
+            if ($old_log !== false) {
+                $lines = explode("\n", $old_log);
+                $lines = array_slice($lines, -1000); // Keep last 1000 lines
+                file_put_contents($log_file, implode("\n", $lines));
+            }
         }
         
         // Append new log entry
         file_put_contents($log_file, $log_entry, FILE_APPEND | LOCK_EX);
+    }
+    
+    /**
+     * Safe file_get_contents wrapper with local file validation
+     */
+    private function safe_file_get_contents($file_path) {
+        // Ensure it's a local file path and within WordPress directory structure
+        $real_path = realpath($file_path);
+        $wp_content_dir = realpath(WP_CONTENT_DIR);
+        
+        if ($real_path === false || strpos($real_path, $wp_content_dir) !== 0) {
+            return false;
+        }
+        
+        return file_get_contents($real_path);
     }
     
     /**
@@ -428,7 +446,11 @@ class Core {
             return [];
         }
         
-        $content = file_get_contents($log_file);
+        $content = $this->safe_file_get_contents($log_file);
+        if ($content === false) {
+            return [];
+        }
+        
         $lines = array_filter(explode("\n", $content));
         $lines = array_slice($lines, -$limit);
         
